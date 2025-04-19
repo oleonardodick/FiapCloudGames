@@ -1,3 +1,16 @@
+using FiapCloudGames.API.DTOs.Requests;
+using FiapCloudGames.API.Middlewares;
+using FiapCloudGames.API.Repositories.Implementations;
+using FiapCloudGames.API.Repositories.Interfaces;
+using FiapCloudGames.API.Services.Configurations.JwtConfigurations;
+using FiapCloudGames.API.Services.Implementations;
+using FiapCloudGames.API.Services.Interfaces;
+using FiapCloudGames.API.Validators;
+using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
+
+const string AUTHENTICATION_TYPE = "Bearer";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,7 +18,53 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{ 
+    options.AddSecurityDefinition(AUTHENTICATION_TYPE, new OpenApiSecurityScheme
+    {
+        Description = @"JWT Authorization header using the Bearer scheme. Example: ""Authorization: Bearer.
+                          Enter 'Bearer' [space] and then your token in the text input below.
+                          Example: 'Bearer 12345abcdef'",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = AUTHENTICATION_TYPE
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = AUTHENTICATION_TYPE
+                    },
+                    Scheme = "oauth2",
+                    Name = AUTHENTICATION_TYPE,
+                    In = ParameterLocation.Header
+                },
+                new List<string> ()
+            }
+        });
+});
+
+#region Repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+#endregion
+
+#region Services
+builder.Services.AddSingleton<IEncryptionService, EncryptionService>();
+builder.Services.AddSingleton<IJwtService, JwtService>();
+builder.Services.AddScoped<IUserService, UserService>();
+#endregion
+
+#region Validators
+builder.Services.AddScoped<IValidator<RequestUserInputDTO>, RequestUserInputValidator>();
+#endregion
+
+builder.Services.AddJwtServices();
 
 var app = builder.Build();
 
@@ -15,6 +74,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

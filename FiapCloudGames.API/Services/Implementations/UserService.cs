@@ -24,14 +24,14 @@ namespace FiapCloudGames.API.Services.Implementations
             _jwtService = jwtService;
         }
 
-        public async Task<ResponseUsersDTO> GetAll(RequestAllDataDTO request)
+        public async Task<ResponseUsersDTO> GetAll(int pageNumber)
         {
-            var (users, totalItems) = await _userRepository.GetAll(request.PageNumber, PAGE_SIZE);
+            var (users, totalItems) = await _userRepository.GetAll(pageNumber, PAGE_SIZE);
 
             return new ResponseUsersDTO
             {
                 Pagination = new PaginationDTO { 
-                    PageNumber = request.PageNumber,
+                    PageNumber = pageNumber,
                     TotalItems = totalItems,
                     TotalPages = (int)Math.Ceiling(totalItems/(double)PAGE_SIZE)
                 },

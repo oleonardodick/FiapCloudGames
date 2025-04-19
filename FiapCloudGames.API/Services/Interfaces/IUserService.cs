@@ -6,7 +6,7 @@ namespace FiapCloudGames.API.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<ResponseUsersDTO> GetAll(RequestAllDataDTO request);
+        Task<ResponseUsersDTO> GetAll(int pageNumber);
         Task<ResponseUserDTO> GetById(Guid userId);
         Task<ResponseAuthDTO> Create(RequestUserInputDTO request);
         Task Update(Guid userId, RequestUserInputDTO request);
