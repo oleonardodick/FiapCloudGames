@@ -10,6 +10,7 @@
         public const string RequiredFieldMessage = "O campo '{0}' é obrigatório";
         public const string EmailAlreadyExistsMessage = "O e-mail informado já está cadastrado";
         public const string InvalidSizePasswordMessage = "A senha deve possuir entre 8 e 30 caracteres";
+        public const string RoleNotFoundMessage = "Role não encontrada";
 
         //Internal messages
         public const string JwtSectionNotConfigured = "A configuração 'JwtSettings' não foi encontrada no appsettings.json";
