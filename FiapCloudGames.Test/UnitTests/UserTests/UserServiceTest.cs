@@ -212,7 +212,39 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
 
             Assert.NotNull(exception);
             Assert.Contains(AppMessages.UserNotFoundMessage, exception.GetErrorMessages());
+        }
 
+        [Fact]
+        public async Task Delete_ShouldDeleteTheUser()
+        {
+            //Arrange
+            var user = FakeUser.FakeSpecificUser();
+
+            _userRepository
+                .Setup(u => u.GetById(user.Id))
+                .ReturnsAsync(user);
+
+            //Act
+            await _userSevice.Delete(user.Id);
+
+            //Assert
+            _userRepository.Verify(r => r.Delete(user), Times.Once);
+        }
+
+        [Fact]
+        public async Task Delete_ShouldReturnUserNotFound()
+        {
+            //Arrange
+            var userId = Guid.NewGuid();
+            _userRepository
+                .Setup(u => u.GetById(userId))
+                .ReturnsAsync((User?)null);
+
+            //Act & Assert
+            var exception = await Assert.ThrowsAsync<NotFoundException>(() => _userSevice.Delete(userId));
+
+            Assert.NotNull(exception);
+            Assert.Contains(AppMessages.UserNotFoundMessage, exception.GetErrorMessages());
         }
     }
 }

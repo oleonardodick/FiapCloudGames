@@ -92,5 +92,13 @@ namespace FiapCloudGames.API.Services.Implementations
 
             _userRepository.Update(user);
         }
+
+        public async Task Delete(Guid userId)
+        {
+            var user = await _userRepository.GetById(userId);
+            if (user is null) throw new NotFoundException(AppMessages.UserNotFoundMessage);
+
+            _userRepository.Delete(user);
+        }
     }
 }

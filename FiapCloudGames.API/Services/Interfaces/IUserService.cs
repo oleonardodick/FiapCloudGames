@@ -10,5 +10,6 @@ namespace FiapCloudGames.API.Services.Interfaces
         Task<ResponseUserDTO> GetById(Guid userId);
         Task<ResponseAuthDTO> Create(RequestUserInputDTO request);
         Task Update(Guid userId, RequestUserInputDTO request);
+        Task Delete(Guid userId);
     }
 }
