@@ -1,3 +1,4 @@
+using FiapCloudGames.API.Database;
 using FiapCloudGames.API.DTOs.Requests;
 using FiapCloudGames.API.Middlewares;
 using FiapCloudGames.API.Repositories.Implementations;
@@ -7,6 +8,7 @@ using FiapCloudGames.API.Services.Implementations;
 using FiapCloudGames.API.Services.Interfaces;
 using FiapCloudGames.API.Validators;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 const string AUTHENTICATION_TYPE = "Bearer";
@@ -65,6 +67,13 @@ builder.Services.AddScoped<IValidator<RequestUpdateUserDTO>, RequestUpdateUserVa
 #endregion
 
 builder.Services.AddJwtServices();
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+    options.UseNpgsql(connectionString);
+});
 
 var app = builder.Build();
 
