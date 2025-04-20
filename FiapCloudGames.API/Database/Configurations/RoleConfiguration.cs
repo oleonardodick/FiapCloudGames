@@ -15,6 +15,11 @@ namespace FiapCloudGames.API.Database.Configurations
                 .WithOne(u => u.Role)
                 .HasForeignKey(u => u.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasData(
+                new Role { Name = "Admin"},
+                new Role { Name = "User" }
+            );
         }
     }
 }

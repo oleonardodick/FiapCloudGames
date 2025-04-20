@@ -59,7 +59,7 @@ namespace FiapCloudGames.API.Services.Implementations
             };
         }
 
-        public async Task<ResponseAuthDTO> Create(RequestCreateUserDTO request)
+        public async Task<ResponseUserDTO> Create(RequestCreateUserDTO request)
         {
             var userEmailAreadyExists = await _userRepository.GetByEmailAsync(request.Email) != null;
             if (userEmailAreadyExists) throw new EmailAlreadyExistsException(AppMessages.EmailAlreadyExistsMessage);
@@ -72,11 +72,14 @@ namespace FiapCloudGames.API.Services.Implementations
                 RoleId = request.RoleId.Value
             };
 
-            var createdUser = await _userRepository.Create(user);
+            await _userRepository.Create(user);
 
-            return new ResponseAuthDTO
+            return new ResponseUserDTO
             {
-                AccessToken = _jwtService.GenerateToken(createdUser.Id)
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                AccessToken = _jwtService.GenerateToken(user.Id)
             };
         }
 
@@ -92,7 +95,7 @@ namespace FiapCloudGames.API.Services.Implementations
                 : user.Password;
             user.RoleId = request.RoleId ?? user.RoleId;
 
-            _userRepository.Update(user);
+            await _userRepository.Update(user);
         }
 
         public async Task Delete(Guid userId)
@@ -100,7 +103,7 @@ namespace FiapCloudGames.API.Services.Implementations
             var user = await _userRepository.GetById(userId);
             if (user is null) throw new NotFoundException(AppMessages.UserNotFoundMessage);
 
-            _userRepository.Delete(user);
+            await _userRepository.Delete(user);
         }
     }
 }

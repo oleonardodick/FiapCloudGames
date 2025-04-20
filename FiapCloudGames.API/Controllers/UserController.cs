@@ -60,7 +60,16 @@ namespace FiapCloudGames.API.Controllers
                 var errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
                 throw new ValidationErrorException(errors);
             }
-            return Ok(_userService.Update(userId, request));
+            await _userService.Update(userId, request);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("{userId:guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid userId)
+        {
+            await _userService.Delete(userId);
+            return Ok();
         }
     }
 }

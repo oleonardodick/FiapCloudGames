@@ -6,8 +6,8 @@ namespace FiapCloudGames.API.Repositories.Interfaces
     {
         Task<(IList<T>, int totalItems)> GetAll(int pageNumber, int pageSize);
         Task<T?> GetById(Guid id);
-        Task<T> Create(T entity);
-        void Update(T entity);
-        void Delete(T entity);
+        Task Create(T entity);
+        Task Update(T entity);
+        Task Delete(T entity);
     }
 }

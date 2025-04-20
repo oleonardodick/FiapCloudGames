@@ -106,27 +106,25 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
         public async Task Create_ShouldCreateAnUser()
         {
             //Arrange
-            var user = FakeUser.FakeSpecificUser();
             var generatedToken = "generatedToken";
 
             var request = new RequestCreateUserDTO
             {
-                Name = user.Name,
-                Email = user.Email,
-                Password = user.Password,
-                RoleId = user.RoleId
+                Name = "test User",
+                Email = "teste@mail.com",
+                Password = "@Password123",
+                RoleId = Guid.NewGuid()
             };
 
             _userRepository
-                .Setup(u => u.GetByEmailAsync(user.Email))
+                .Setup(u => u.GetByEmailAsync(It.IsAny<string>()))
                 .ReturnsAsync((User?)null);
 
             _userRepository
-                .Setup(u => u.Create(It.IsAny<User>()))
-                .ReturnsAsync(user);
+                .Setup(u => u.Create(It.IsAny<User>()));
 
             _jwtService
-                .Setup(j => j.GenerateToken(user.Id))
+                .Setup(j => j.GenerateToken(It.IsAny<Guid>()))
                 .Returns(generatedToken);
 
             //Act
@@ -134,7 +132,11 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
 
             //Assert
             Assert.NotNull(response);
+            Assert.NotEqual(Guid.Empty, response.Id);
+            Assert.Equal(request.Name, response.Name);
+            Assert.Equal(request.Email, response.Email);
             Assert.Equal(generatedToken, response.AccessToken);
+            _userRepository.Verify(r => r.Create(It.IsAny<User>()), Times.Once);
 
         }
 
