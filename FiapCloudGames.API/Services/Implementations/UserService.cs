@@ -4,7 +4,7 @@ using FiapCloudGames.API.DTOs.Responses;
 using FiapCloudGames.API.DTOs.Responses.User;
 using FiapCloudGames.API.Entities;
 using FiapCloudGames.API.Exceptions;
-using FiapCloudGames.API.Messages;
+using FiapCloudGames.API.Utils;
 using FiapCloudGames.API.Repositories.Interfaces;
 using FiapCloudGames.API.Services.Interfaces;
 
@@ -15,13 +15,15 @@ namespace FiapCloudGames.API.Services.Implementations
         private readonly IUserRepository _userRepository;
         private readonly IEncryptionService _encryptionService;
         private readonly IJwtService _jwtService;
+        private readonly IRoleRepository _roleRepository;
         private const int PAGE_SIZE = 10;
 
-        public UserService(IUserRepository userRepository, IEncryptionService encryptionService, IJwtService jwtService)
+        public UserService(IUserRepository userRepository, IEncryptionService encryptionService, IJwtService jwtService, IRoleRepository roleRepository)
         {
             _userRepository = userRepository;
             _encryptionService = encryptionService;
             _jwtService = jwtService;
+            _roleRepository = roleRepository;
         }
 
         public async Task<ResponseUsersDTO> GetAll(int pageNumber)
@@ -64,12 +66,15 @@ namespace FiapCloudGames.API.Services.Implementations
             var userEmailAreadyExists = await _userRepository.GetByEmailAsync(request.Email) != null;
             if (userEmailAreadyExists) throw new EmailAlreadyExistsException(AppMessages.EmailAlreadyExistsMessage);
 
+            var role = await _roleRepository.GetById(request.RoleId);
+            if (role is null) throw new NotFoundException(AppMessages.RoleNotFoundMessage);
+
             var user = new User
             {
                 Name = request.Name,
                 Email = request.Email,
                 Password = _encryptionService.Encrypt(request.Password),
-                RoleId = request.RoleId.Value
+                RoleId = request.RoleId,
             };
 
             await _userRepository.Create(user);
@@ -79,7 +84,7 @@ namespace FiapCloudGames.API.Services.Implementations
                 Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
-                AccessToken = _jwtService.GenerateToken(user.Id)
+                AccessToken = _jwtService.GenerateToken(user.Id, role.Name)
             };
         }
 

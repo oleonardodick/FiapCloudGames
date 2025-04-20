@@ -1,4 +1,5 @@
 ﻿using FiapCloudGames.API.Entities;
+using FiapCloudGames.API.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,8 +18,8 @@ namespace FiapCloudGames.API.Database.Configurations
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData(
-                new Role { Name = "Admin"},
-                new Role { Name = "User" }
+                new Role { Name = AppRoles.Admin},
+                new Role { Name = AppRoles.User }
             );
         }
     }

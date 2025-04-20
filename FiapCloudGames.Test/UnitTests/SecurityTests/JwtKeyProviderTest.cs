@@ -1,4 +1,4 @@
-﻿using FiapCloudGames.API.Messages;
+﻿using FiapCloudGames.API.Utils;
 using FiapCloudGames.API.Services.Configurations.JwtConfigurations;
 using Microsoft.Extensions.Configuration;
 using System.Text;

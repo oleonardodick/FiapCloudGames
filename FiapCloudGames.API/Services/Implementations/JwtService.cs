@@ -15,14 +15,15 @@ namespace FiapCloudGames.API.Services.Implementations
             _jwtKeyProvider = jwtKeyProvider;
         }
 
-        public string GenerateToken(Guid userId)
+        public string GenerateToken(Guid userId, string role)
         {
             var key = _jwtKeyProvider.GetSigninKey();
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString())
+                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
+                new Claim(ClaimTypes.Role, role)
             };
 
             var token = new JwtSecurityToken(

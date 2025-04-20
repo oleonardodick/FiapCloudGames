@@ -1,8 +1,10 @@
 ﻿using FiapCloudGames.API.Services.Configurations.JwtConfigurations;
 using FiapCloudGames.API.Services.Implementations;
+using FiapCloudGames.API.Utils;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace FiapCloudGames.Test.UnitTests.SecurityTests
@@ -29,19 +31,23 @@ namespace FiapCloudGames.Test.UnitTests.SecurityTests
                 .Returns(key);
 
             var userId = Guid.NewGuid();
+            var role = AppRoles.Admin;
 
             //Act
-            var token = _jwtService.GenerateToken(userId);
+            var token = _jwtService.GenerateToken(userId, role);
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwtToken = tokenHandler.ReadJwtToken(token);
-            var claim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub);
+            var claimUserId = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub);
+            var claimRole = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
 
             //Assert
             Assert.NotNull(token);
             Assert.NotEmpty(token);
             Assert.NotNull(jwtToken);
-            Assert.NotNull(claim);
-            Assert.Equal(userId.ToString(), claim.Value);
+            Assert.NotNull(claimUserId);
+            Assert.Equal(userId.ToString(), claimUserId.Value);
+            Assert.NotNull(claimRole);
+            Assert.Equal(role, claimRole.Value);
         }
     }
 }

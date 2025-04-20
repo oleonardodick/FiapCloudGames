@@ -1,7 +1,7 @@
 ﻿using FiapCloudGames.API.DTOs.Requests;
 using FiapCloudGames.API.Entities;
 using FiapCloudGames.API.Exceptions;
-using FiapCloudGames.API.Messages;
+using FiapCloudGames.API.Utils;
 using FiapCloudGames.Test.Utils;
 using Moq;
 
@@ -107,6 +107,7 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
         {
             //Arrange
             var generatedToken = "generatedToken";
+            var role = new Role { Name = AppRoles.Admin };
 
             var request = new RequestCreateUserDTO
             {
@@ -120,11 +121,15 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
                 .Setup(u => u.GetByEmailAsync(It.IsAny<string>()))
                 .ReturnsAsync((User?)null);
 
+            _roleRepository
+                .Setup(u => u.GetById(request.RoleId))
+                .ReturnsAsync(role);
+
             _userRepository
                 .Setup(u => u.Create(It.IsAny<User>()));
 
             _jwtService
-                .Setup(j => j.GenerateToken(It.IsAny<Guid>()))
+                .Setup(j => j.GenerateToken(It.IsAny<Guid>(), It.IsAny<string>()))
                 .Returns(generatedToken);
 
             //Act

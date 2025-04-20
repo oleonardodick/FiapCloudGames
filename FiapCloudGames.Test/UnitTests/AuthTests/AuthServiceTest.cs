@@ -1,7 +1,7 @@
 ﻿using FiapCloudGames.API.DTOs.Requests;
 using FiapCloudGames.API.Entities;
 using FiapCloudGames.API.Exceptions;
-using FiapCloudGames.API.Messages;
+using FiapCloudGames.API.Utils;
 using FiapCloudGames.Test.Utils;
 using Moq;
 
@@ -63,6 +63,8 @@ namespace FiapCloudGames.Test.UnitTests.AuthTests
         {
             //Arrange
             var user = FakeUser.FakeSpecificUser();
+            var role = new Role { Name = AppRoles.Admin };
+            user.Role = role;
             var accessToken = "accessToken";
 
             var request = new RequestLoginDTO
@@ -80,7 +82,7 @@ namespace FiapCloudGames.Test.UnitTests.AuthTests
                 .Returns(true);
 
             _jwtService
-                .Setup(x => x.GenerateToken(user.Id))
+                .Setup(x => x.GenerateToken(user.Id, user.Role.Name))
                 .Returns(accessToken);
 
             //Act

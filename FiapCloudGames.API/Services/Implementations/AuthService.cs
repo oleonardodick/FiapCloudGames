@@ -29,7 +29,7 @@ namespace FiapCloudGames.API.Services.Implementations
 
             return new ResponseAuthDTO
             {
-                AccessToken = _jwtService.GenerateToken(user.Id)
+                AccessToken = _jwtService.GenerateToken(user.Id, user.Role.Name)
             };
         }
     }

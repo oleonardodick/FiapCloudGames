@@ -1,4 +1,4 @@
-﻿namespace FiapCloudGames.API.Messages
+﻿namespace FiapCloudGames.API.Utils
 {
     public static class AppMessages
     {

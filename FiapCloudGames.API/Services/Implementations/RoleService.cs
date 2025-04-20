@@ -1,6 +1,6 @@
 ﻿using FiapCloudGames.API.DTOs.Responses.RoleDTO;
 using FiapCloudGames.API.Exceptions;
-using FiapCloudGames.API.Messages;
+using FiapCloudGames.API.Utils;
 using FiapCloudGames.API.Repositories.Interfaces;
 using FiapCloudGames.API.Services.Interfaces;
 

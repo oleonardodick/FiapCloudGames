@@ -10,6 +10,7 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
         protected readonly Mock<IUserRepository> _userRepository;
         protected readonly Mock<IEncryptionService> _encryptionService;
         protected readonly Mock<IJwtService> _jwtService;
+        protected readonly Mock<IRoleRepository> _roleRepository;
         protected readonly UserService _userSevice;
 
         protected UserServiceTestBase()
@@ -17,7 +18,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             _userRepository = new Mock<IUserRepository>();
             _encryptionService = new Mock<IEncryptionService>();
             _jwtService = new Mock<IJwtService>();
-            _userSevice = new UserService(_userRepository.Object, _encryptionService.Object, _jwtService.Object);
+            _roleRepository = new Mock<IRoleRepository>();
+            _userSevice = new UserService(_userRepository.Object, _encryptionService.Object, _jwtService.Object, _roleRepository.Object);
         }
     }
 }

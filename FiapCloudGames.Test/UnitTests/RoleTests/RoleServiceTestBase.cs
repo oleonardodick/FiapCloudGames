@@ -1,6 +1,7 @@
 ﻿using FiapCloudGames.API.Entities;
 using FiapCloudGames.API.Repositories.Interfaces;
 using FiapCloudGames.API.Services.Implementations;
+using FiapCloudGames.API.Utils;
 using Moq;
 
 namespace FiapCloudGames.Test.UnitTests.RoleTests
@@ -16,8 +17,8 @@ namespace FiapCloudGames.Test.UnitTests.RoleTests
             _roleRepository = new Mock<IRoleRepository>();
             _roleService = new RoleService(_roleRepository.Object);
             roles = new List<Role>{
-                new Role {Id = Guid.NewGuid(), Name = "Admin", CreatedAt = DateTime.UtcNow},
-                new Role {Id = Guid.NewGuid(), Name = "User", CreatedAt = DateTime.UtcNow}
+                new Role {Id = Guid.NewGuid(), Name = AppRoles.Admin, CreatedAt = DateTime.UtcNow},
+                new Role {Id = Guid.NewGuid(), Name = AppRoles.User, CreatedAt = DateTime.UtcNow}
             };
         }
     }

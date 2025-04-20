@@ -1,5 +1,5 @@
 ﻿using FiapCloudGames.API.DTOs.Requests;
-using FiapCloudGames.API.Messages;
+using FiapCloudGames.API.Utils;
 using FluentValidation;
 namespace FiapCloudGames.API.Validators
 {

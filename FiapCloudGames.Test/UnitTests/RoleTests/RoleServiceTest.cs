@@ -1,6 +1,6 @@
 ﻿using FiapCloudGames.API.Entities;
 using FiapCloudGames.API.Exceptions;
-using FiapCloudGames.API.Messages;
+using FiapCloudGames.API.Utils;
 using Moq;
 
 namespace FiapCloudGames.Test.UnitTests.RoleTests

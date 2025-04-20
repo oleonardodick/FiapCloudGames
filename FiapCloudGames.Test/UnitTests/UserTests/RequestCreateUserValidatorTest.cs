@@ -1,5 +1,5 @@
 ﻿using FiapCloudGames.API.DTOs.Requests;
-using FiapCloudGames.API.Messages;
+using FiapCloudGames.API.Utils;
 using FiapCloudGames.API.Validators;
 using FluentValidation.TestHelper;
 
