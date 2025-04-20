@@ -8,8 +8,8 @@ namespace FiapCloudGames.API.Services.Interfaces
     {
         Task<ResponseUsersDTO> GetAll(int pageNumber);
         Task<ResponseUserDTO> GetById(Guid userId);
-        Task<ResponseAuthDTO> Create(RequestUserInputDTO request);
-        Task Update(Guid userId, RequestUserInputDTO request);
+        Task<ResponseAuthDTO> Create(RequestCreateUserDTO request);
+        Task Update(Guid userId, RequestUpdateUserDTO request);
         Task Delete(Guid userId);
     }
 }

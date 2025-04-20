@@ -17,18 +17,14 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             var users = FakeUser.FakeListUsers(qtToGenerate);
             var pageSize = 10;
             var totalPages = (int)Math.Ceiling(qtToGenerate / (double)pageSize);
-
-            var request = new RequestAllDataDTO
-            {
-                PageNumber = 1
-            };
+            var pageNumber = 1;
 
             _userRepository
-                .Setup(r => r.GetAll(request.PageNumber, pageSize))
+                .Setup(r => r.GetAll(pageNumber, pageSize))
                 .ReturnsAsync((users, qtToGenerate));
 
             //Act
-            var response = await _userSevice.GetAll(request);
+            var response = await _userSevice.GetAll(pageNumber);
             var resultUsers = response.Users;
             var pagination = response.Pagination;
 
@@ -36,7 +32,7 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             Assert.NotNull(resultUsers);
             Assert.Equal(qtToGenerate, resultUsers.Count);
             Assert.NotNull(pagination);
-            Assert.Equal(request.PageNumber, pagination.PageNumber);
+            Assert.Equal(pageNumber, pagination.PageNumber);
             Assert.Equal(totalPages, pagination.TotalPages);
             Assert.Equal(qtToGenerate, pagination.TotalItems);
         }
@@ -48,18 +44,14 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             var qtToGenerate = 0;
             var pageSize = 10;
             var totalPages = (int)Math.Ceiling(qtToGenerate / (double)pageSize);
-
-            var request = new RequestAllDataDTO
-            {
-                PageNumber = 1
-            };
+            var pageNumber = 1;
 
             _userRepository
-                .Setup(r => r.GetAll(request.PageNumber, pageSize))
+                .Setup(r => r.GetAll(pageNumber, pageSize))
                 .ReturnsAsync(([], qtToGenerate));
 
             //Act
-            var response = await _userSevice.GetAll(request);
+            var response = await _userSevice.GetAll(pageNumber);
             var resultUsers = response.Users;
             var pagination = response.Pagination;
 
@@ -67,7 +59,7 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             Assert.NotNull(resultUsers);
             Assert.Empty(resultUsers);
             Assert.NotNull(pagination);
-            Assert.Equal(request.PageNumber, pagination.PageNumber);
+            Assert.Equal(pageNumber, pagination.PageNumber);
             Assert.Equal(totalPages, pagination.TotalPages);
             Assert.Equal(qtToGenerate, pagination.TotalItems);
         }
@@ -117,7 +109,7 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             var user = FakeUser.FakeSpecificUser();
             var generatedToken = "generatedToken";
 
-            var request = new RequestUserInputDTO
+            var request = new RequestCreateUserDTO
             {
                 Name = user.Name,
                 Email = user.Email,
@@ -151,7 +143,7 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
         {
             //Arrange
             var user = FakeUser.FakeSpecificUser();
-            var request = new RequestUserInputDTO
+            var request = new RequestCreateUserDTO
             {
                 Name = "user test",
                 Email = user.Email,
@@ -176,7 +168,7 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             //Arrange
             var user = FakeUser.FakeSpecificUser();
 
-            var request = new RequestUserInputDTO
+            var request = new RequestUpdateUserDTO
             {
                 Name = "Nome atualizado"
             };
@@ -198,7 +190,7 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
         {
             //Arrange
             var userId = Guid.NewGuid();
-            var request = new RequestUserInputDTO
+            var request = new RequestUpdateUserDTO
             {
                 Name = "Nome atualizado"
             };

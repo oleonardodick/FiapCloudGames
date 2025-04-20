@@ -59,7 +59,7 @@ namespace FiapCloudGames.API.Services.Implementations
             };
         }
 
-        public async Task<ResponseAuthDTO> Create(RequestUserInputDTO request)
+        public async Task<ResponseAuthDTO> Create(RequestCreateUserDTO request)
         {
             var userEmailAreadyExists = await _userRepository.GetByEmailAsync(request.Email) != null;
             if (userEmailAreadyExists) throw new EmailAlreadyExistsException(AppMessages.EmailAlreadyExistsMessage);
@@ -80,14 +80,16 @@ namespace FiapCloudGames.API.Services.Implementations
             };
         }
 
-        public async Task Update(Guid userId, RequestUserInputDTO request)
+        public async Task Update(Guid userId, RequestUpdateUserDTO request)
         {
             var user = await _userRepository.GetById(userId);
             if (user is null) throw new NotFoundException(AppMessages.UserNotFoundMessage);
 
             user.Name = request.Name ?? user.Name;
             user.Email = request.Email ?? user.Email;
-            user.Password = _encryptionService.Encrypt(request.Password) ?? user.Password;
+            user.Password = !string.IsNullOrEmpty(request.Password)?
+                _encryptionService.Encrypt(request.Password) 
+                : user.Password;
             user.RoleId = request.RoleId ?? user.RoleId;
 
             _userRepository.Update(user);

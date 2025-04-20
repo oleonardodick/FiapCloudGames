@@ -7,7 +7,6 @@ using FiapCloudGames.API.Services.Implementations;
 using FiapCloudGames.API.Services.Interfaces;
 using FiapCloudGames.API.Validators;
 using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 
 const string AUTHENTICATION_TYPE = "Bearer";
@@ -61,7 +60,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 #endregion
 
 #region Validators
-builder.Services.AddScoped<IValidator<RequestUserInputDTO>, RequestUserInputValidator>();
+builder.Services.AddScoped<IValidator<RequestCreateUserDTO>, RequestCreateUserValidator>();
+builder.Services.AddScoped<IValidator<RequestUpdateUserDTO>, RequestUpdateUserValidator>();
 #endregion
 
 builder.Services.AddJwtServices();

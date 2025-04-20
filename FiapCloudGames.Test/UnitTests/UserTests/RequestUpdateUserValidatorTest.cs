@@ -5,24 +5,22 @@ using FluentValidation.TestHelper;
 
 namespace FiapCloudGames.Test.UnitTests.UserTests
 {
-    public class RequestUserInputValidatorTest
+    public class RequestUpdateUserValidatorTest
     {
-        private readonly RequestUserInputValidator _validator;
+        private readonly RequestUpdateUserValidator _validator;
 
-        public RequestUserInputValidatorTest()
+        public RequestUpdateUserValidatorTest()
         {
-            _validator = new RequestUserInputValidator();
+            _validator = new RequestUpdateUserValidator();
         }
 
         [Fact]
         public void Validate_ShouldReturnRequiredFieldForName()
         {
             //Arrange
-            var request = new RequestUserInputDTO
+            var request = new RequestUpdateUserDTO
             {
-                Email = "mail@test.com",
-                Password = "@Password123",
-                RoleId = Guid.NewGuid()
+                Name = ""
             };
 
             //Act
@@ -36,12 +34,9 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
         public void Validate_ShouldReturnInvalidEmail()
         {
             //Arrange
-            var request = new RequestUserInputDTO
+            var request = new RequestUpdateUserDTO
             {
-                Name = "User test",
-                Email = "invalidMail",
-                Password = "@Password123",
-                RoleId = Guid.NewGuid()
+                Email = "invalidMail"
             };
 
             //Act
@@ -55,11 +50,9 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
         public void Validate_ShouldReturnRequiredFieldForEmail()
         {
             //Arrange
-            var request = new RequestUserInputDTO
+            var request = new RequestUpdateUserDTO
             {
-                Name = "User test",
-                Password = "@Password123",
-                RoleId = Guid.NewGuid()
+                Email = ""
             };
 
             //Act
@@ -73,12 +66,9 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
         public void Validate_ShouldReturnInvalidPasswordFormat()
         {
             //Arrange
-            var request = new RequestUserInputDTO
+            var request = new RequestUpdateUserDTO
             {
-                Name = "User test",
-                Email = "mail@test.com",
-                Password = "password",
-                RoleId = Guid.NewGuid()
+                Password = "password"
             };
 
             //Act
@@ -93,12 +83,9 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
         public void Validate_ShouldReturnInvalidSizeForPassword()
         {
             //Arrange
-            var request = new RequestUserInputDTO
+            var request = new RequestUpdateUserDTO
             {
-                Name = "User test",
-                Email = "mail@test.com",
-                Password = "@Pa12",
-                RoleId = Guid.NewGuid()
+                Password = "@Pa12"
             };
 
             //Act
@@ -109,28 +96,14 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
         }
 
         [Fact]
-        public void Validate_ShouldReturnRequiredFieldForRoleId()
-        {
-            //Arrange
-            var request = new RequestUserInputDTO
-            {
-                Name = "User test",
-                Email = "mail@test.com",
-                Password = "@Password123",
-            };
-
-            //Act
-            var result = _validator.TestValidate(request);
-
-            //Assert
-            result.ShouldHaveValidationErrorFor(c => c.RoleId).WithErrorMessage(AppMessages.GetRequiredFieldMessage("roleId"));
-        }
-
-        [Fact]
         public void Validate_ShouldReturnMoreThanOneError()
         {
             //Arrange
-            var request = new RequestUserInputDTO { };
+            var request = new RequestUpdateUserDTO 
+            {
+                Name = "",
+                Email = ""
+            };
 
             //Act
             var result = _validator.TestValidate(request);
@@ -144,7 +117,7 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
         public void Validate_ShouldValidateTheUserData()
         {
             //Arrange
-            var request = new RequestUserInputDTO
+            var request = new RequestUpdateUserDTO
             {
                 Name = "User test",
                 Email = "mail@test.com",
