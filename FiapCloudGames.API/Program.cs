@@ -4,10 +4,12 @@ using FiapCloudGames.API.Middlewares;
 using FiapCloudGames.API.Repositories.Implementations;
 using FiapCloudGames.API.Repositories.Interfaces;
 using FiapCloudGames.API.Services.Configurations.JwtConfigurations;
+using FiapCloudGames.API.Services.Handlers;
 using FiapCloudGames.API.Services.Implementations;
 using FiapCloudGames.API.Services.Interfaces;
 using FiapCloudGames.API.Validators;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -57,6 +59,7 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 #endregion
 
 #region Services
+builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthorizationResultHandler>();
 builder.Services.AddSingleton<IEncryptionService, EncryptionService>();
 builder.Services.AddSingleton<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();

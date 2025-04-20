@@ -1,5 +1,4 @@
-﻿using FiapCloudGames.API.Exceptions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FiapCloudGames.API.Services.Configurations.JwtConfigurations
@@ -24,15 +23,6 @@ namespace FiapCloudGames.API.Services.Configurations.JwtConfigurations
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = key
-            };
-
-            options.Events = new JwtBearerEvents
-            {
-                OnChallenge = context =>
-                {
-                    context.HandleResponse();
-                    throw new InvalidTokenException();
-                }
             };
         }
     }

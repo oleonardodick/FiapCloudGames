@@ -2,7 +2,9 @@
 using FiapCloudGames.API.DTOs.Responses.User;
 using FiapCloudGames.API.Exceptions;
 using FiapCloudGames.API.Services.Interfaces;
+using FiapCloudGames.API.Utils;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 
@@ -23,6 +25,7 @@ namespace FiapCloudGames.API.Controllers
             _validatorUpdate = validatorUpdate;
         }
 
+        [Authorize(Roles = AppRoles.Admin)]
         [HttpGet]
         [ProducesResponseType(typeof(ResponseUsersDTO), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
         public async Task<IActionResult> GetAll([FromQuery]int? pageNumber)
@@ -31,6 +34,7 @@ namespace FiapCloudGames.API.Controllers
             return Ok(await _userService.GetAll(page));
         }
 
+        [Authorize(Roles = AppRoles.Admin)]
         [HttpGet]
         [Route("{userId:guid}")]
         public async Task<IActionResult> GetById([FromRoute] Guid userId)
@@ -50,6 +54,7 @@ namespace FiapCloudGames.API.Controllers
             return Ok(await _userService.Create(request));
         }
 
+        [Authorize]
         [HttpPut]
         [Route("{userId:guid}")]
         public async Task<IActionResult> Update([FromRoute] Guid userId, [FromBody] RequestUpdateUserDTO request)
@@ -64,6 +69,7 @@ namespace FiapCloudGames.API.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete]
         [Route("{userId:guid}")]
         public async Task<IActionResult> Delete([FromRoute] Guid userId)

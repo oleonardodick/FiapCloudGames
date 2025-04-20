@@ -1,4 +1,6 @@
 ﻿using FiapCloudGames.API.Services.Interfaces;
+using FiapCloudGames.API.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FiapCloudGames.API.Controllers
@@ -14,12 +16,14 @@ namespace FiapCloudGames.API.Controllers
             _roleService = roleService;
         }
 
+        [Authorize(Roles = AppRoles.Admin)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _roleService.GetAll());
         }
 
+        [Authorize(Roles = AppRoles.Admin)]
         [HttpGet]
         [Route("{roleId:guid}")]
         public async Task<IActionResult> GetById([FromRoute] Guid roleId)
