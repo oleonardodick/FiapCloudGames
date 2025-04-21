@@ -37,7 +37,7 @@ namespace FiapCloudGames.Test.UnitTests.SecurityTests
             var token = _jwtService.GenerateToken(userId, role);
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwtToken = tokenHandler.ReadJwtToken(token);
-            var claimUserId = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub);
+            var claimUserId = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
             var claimRole = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
 
             //Assert

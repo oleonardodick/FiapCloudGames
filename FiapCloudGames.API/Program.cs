@@ -97,6 +97,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ExceptionMiddleware>();
+//app.UseMiddleware<UpdateUserMiddleware>();
 
 app.UseHttpsRedirection();
 

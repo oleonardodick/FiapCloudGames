@@ -1,6 +1,5 @@
 ﻿using FiapCloudGames.API.DTOs.Responses;
 using FiapCloudGames.API.Exceptions;
-using Microsoft.Extensions.Logging;
 
 namespace FiapCloudGames.API.Middlewares
 {

@@ -7,6 +7,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
+using System.Security.Claims;
 
 namespace FiapCloudGames.API.Controllers
 {
@@ -59,12 +60,12 @@ namespace FiapCloudGames.API.Controllers
             return Ok(await _userService.Create(request));
         }
 
-        [Authorize]
+        [Authorize(Roles = AppRoles.Admin)]
         [HttpPut]
         [Route("{userId:guid}")]
         public async Task<IActionResult> Update([FromRoute] Guid userId, [FromBody] RequestUpdateUserDTO request)
         {
-            _logger.LogInformation("Rodando o método Update do usuário buscando o ID {0} e com as informações {@Request}", userId, request.ToString());
+            _logger.LogInformation("Rodando o método Update do usuário buscando o ID {0} e com as informações {@Request}", userId, request);
             var validationResult = await _validatorUpdate.ValidateAsync(request);
             if (!validationResult.IsValid)
             {
@@ -76,11 +77,37 @@ namespace FiapCloudGames.API.Controllers
         }
 
         [Authorize]
+        [HttpPut("update-self")]
+        public async Task<IActionResult> UpdateSelf([FromBody] RequestUpdateUserDTO request)
+        {
+            Guid userId = Guid.Parse(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)!.Value);
+            _logger.LogInformation("Rodando o método UpdateSelf do usuário buscando o ID {0} e com as informações {@Request}", userId, request);
+            var validationResult = await _validatorUpdate.ValidateAsync(request);
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
+                throw new ValidationErrorException(errors);
+            }
+            await _userService.Update(userId, request);
+            return Ok();
+        }
+
+        [Authorize(Roles = AppRoles.Admin)]
         [HttpDelete]
         [Route("{userId:guid}")]
         public async Task<IActionResult> Delete([FromRoute] Guid userId)
         {
             _logger.LogInformation("Rodando o método Delete do usuário buscando o ID {0}", userId);
+            await _userService.Delete(userId);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpDelete("delete-self")]
+        public async Task<IActionResult> DeleteSelf()
+        {
+            Guid userId = Guid.Parse(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)!.Value);
+            _logger.LogInformation("Rodando o método DeleteSelf do usuário buscando o ID {0}", userId);
             await _userService.Delete(userId);
             return Ok();
         }
