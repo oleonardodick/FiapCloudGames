@@ -1,4 +1,5 @@
 ﻿using FiapCloudGames.API.DTOs.Requests.UserDTO;
+using FiapCloudGames.API.DTOs.Responses;
 using FiapCloudGames.API.DTOs.Responses.User;
 using FiapCloudGames.API.Exceptions;
 using FiapCloudGames.API.Services.Interfaces;
@@ -6,13 +7,15 @@ using FiapCloudGames.API.Utils;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Mime;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Claims;
 
 namespace FiapCloudGames.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
+    [Consumes("application/json")]
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
@@ -30,8 +33,14 @@ namespace FiapCloudGames.API.Controllers
 
         [Authorize(Roles = AppRoles.Admin)]
         [HttpGet]
-        [ProducesResponseType(typeof(ResponseUsersDTO), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> GetAll([FromQuery]int? pageNumber, [FromQuery] int? perPage)
+        [ProducesResponseType(typeof(ResponseUsersDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(
+            Summary = "Lista usuários com paginação",
+            Description = "Retorna uma lista de usuários paginados. Somente o administrador do sistema tem acesso a este recurso."
+        )]
+        public async Task<IActionResult> GetAll([FromQuery] int? pageNumber, [FromQuery] int? perPage)
         {
             _logger.LogInformation("Rodando o método GetAll do usuário buscando da página {0}", pageNumber ?? 1);
             var page = pageNumber ?? 1;
@@ -42,6 +51,14 @@ namespace FiapCloudGames.API.Controllers
         [Authorize(Roles = AppRoles.Admin)]
         [HttpGet]
         [Route("{userId:guid}")]
+        [ProducesResponseType(typeof(ResponseUserDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status403Forbidden)]
+        [SwaggerOperation(
+            Summary = "Retorna usuário pelo ID",
+            Description = "Retorna um usuário, buscando pelo ID passado. Somente o administrador do sistema tem acesso a este recurso."
+        )]
         public async Task<IActionResult> GetById([FromRoute] Guid userId)
         {
             _logger.LogInformation("Rodando o método GetById do usuário buscando o ID {0}", userId);
@@ -49,6 +66,12 @@ namespace FiapCloudGames.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(ResponseUserDTO), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(
+            Summary = "Cria um novo usuário",
+            Description = "Cria um novo usuário na plataforma. Não é necessário realizar o login para acessar este recurso."
+        )]
         public async Task<IActionResult> Create([FromBody] RequestCreateUserDTO request)
         {
             _logger.LogInformation("Rodando o método Create do usuário com os dados {@Request}", request);
@@ -58,12 +81,23 @@ namespace FiapCloudGames.API.Controllers
                 var errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
                 throw new ValidationErrorException(errors);
             }
-            return Ok(await _userService.Create(request));
+            var response = await _userService.Create(request);
+
+            return Created($"/api/user/{response.Id}", response);
         }
 
         [Authorize(Roles = AppRoles.Admin)]
         [HttpPut]
         [Route("{userId:guid}")]
+        [ProducesResponseType(typeof(ResponseUserDTO), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(
+            Summary = "Atualiza usuário pelo ID",
+            Description = "Atualiza os dados do usuário buscando pelo ID passado. Somente o administrador do sistema tem acesso a este recurso."
+        )]
         public async Task<IActionResult> Update([FromRoute] Guid userId, [FromBody] RequestUpdateUserDTO request)
         {
             _logger.LogInformation("Rodando o método Update do usuário buscando o ID {0} e com as informações {@Request}", userId, request);
@@ -74,11 +108,19 @@ namespace FiapCloudGames.API.Controllers
                 throw new ValidationErrorException(errors);
             }
             await _userService.Update(userId, request);
-            return Ok();
+            return NoContent();
         }
 
         [Authorize]
         [HttpPut("update-self")]
+        [ProducesResponseType(typeof(ResponseUserDTO), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(
+            Summary = "Atualiza os próprios dados",
+            Description = "Atualiza os próprios dados, com base no id do usuário logado. Todos os usuários logados no sistema possuem acesso a este recurso."
+        )]
         public async Task<IActionResult> UpdateSelf([FromBody] RequestUpdateUserDTO request)
         {
             Guid userId = Guid.Parse(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)!.Value);
@@ -90,27 +132,44 @@ namespace FiapCloudGames.API.Controllers
                 throw new ValidationErrorException(errors);
             }
             await _userService.Update(userId, request);
-            return Ok();
+            return NoContent();
         }
 
         [Authorize(Roles = AppRoles.Admin)]
         [HttpDelete]
         [Route("{userId:guid}")]
+        [ProducesResponseType(typeof(ResponseUserDTO), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(
+            Summary = "Exclui um usuário",
+            Description = "Exclui um usuário buscando pelo ID enviado. Somente o administrador do sistema tem acesso a este recurso."
+        )]
         public async Task<IActionResult> Delete([FromRoute] Guid userId)
         {
             _logger.LogInformation("Rodando o método Delete do usuário buscando o ID {0}", userId);
             await _userService.Delete(userId);
-            return Ok();
+            return NoContent();
         }
 
         [Authorize]
         [HttpDelete("delete-self")]
+        [ProducesResponseType(typeof(ResponseUserDTO), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesDTO), StatusCodes.Status400BadRequest)]
+        [SwaggerOperation(
+            Summary = "Exclui o próprio usuário",
+            Description = "Exclui o usuário com base no ID do usuário logado. Todos os usuários logados no sistema possuem acesso a este recurso."
+        )]
         public async Task<IActionResult> DeleteSelf()
         {
             Guid userId = Guid.Parse(User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)!.Value);
             _logger.LogInformation("Rodando o método DeleteSelf do usuário buscando o ID {0}", userId);
             await _userService.Delete(userId);
-            return Ok();
+            return NoContent();
         }
     }
 }

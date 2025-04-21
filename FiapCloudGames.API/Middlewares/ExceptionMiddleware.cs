@@ -37,7 +37,8 @@ namespace FiapCloudGames.API.Middlewares
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await context.Response.WriteAsJsonAsync(new ResponseErrorMessagesDTO
                 {
-                    Errors = ["Erro desconhecido."]
+                    Errors = ["Erro desconhecido."],
+                    StatusCode = context.Response.StatusCode
                 });
             }
         }

@@ -25,7 +25,21 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
-{ 
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Fiap Cloud Games",
+        Description = "API ASP.NET Core para o controle de usuário e seus jogos adquiridos na plataforma.",
+        Contact = new OpenApiContact
+        {
+            Name = "Leonardo Bernardes",
+            Url = new Uri("http://www.linkedin.com/in/oleonardodick")
+        }
+    });
+
+    options.EnableAnnotations();
+
     options.AddSecurityDefinition(AUTHENTICATION_TYPE, new OpenApiSecurityScheme
     {
         Description = @"JWT Authorization header using the Bearer scheme. Example: ""Authorization: Bearer.
@@ -99,7 +113,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Fiap Cloud Games v1");
+    });
 }
 
 app.UseMiddleware<ExceptionMiddleware>();
