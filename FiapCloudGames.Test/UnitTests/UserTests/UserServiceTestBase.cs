@@ -1,6 +1,7 @@
 ﻿using FiapCloudGames.API.Repositories.Interfaces;
 using FiapCloudGames.API.Services.Implementations;
 using FiapCloudGames.API.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace FiapCloudGames.Test.UnitTests.UserTests
@@ -11,6 +12,7 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
         protected readonly Mock<IEncryptionService> _encryptionService;
         protected readonly Mock<IJwtService> _jwtService;
         protected readonly Mock<IRoleRepository> _roleRepository;
+        protected readonly Mock<ILogger<UserService>> _logger;
         protected readonly UserService _userSevice;
 
         protected UserServiceTestBase()
@@ -19,7 +21,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             _encryptionService = new Mock<IEncryptionService>();
             _jwtService = new Mock<IJwtService>();
             _roleRepository = new Mock<IRoleRepository>();
-            _userSevice = new UserService(_userRepository.Object, _encryptionService.Object, _jwtService.Object, _roleRepository.Object);
+            _logger = new Mock<ILogger<UserService>>();
+            _userSevice = new UserService(_userRepository.Object, _encryptionService.Object, _jwtService.Object, _roleRepository.Object, _logger.Object);
         }
     }
 }

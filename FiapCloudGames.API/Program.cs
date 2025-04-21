@@ -12,6 +12,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 const string AUTHENTICATION_TYPE = "Bearer";
 var builder = WebApplication.CreateBuilder(args);
@@ -52,6 +53,11 @@ builder.Services.AddSwaggerGen(options =>
             }
         });
 });
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration).CreateLogger();
+
+builder.Host.UseSerilog();
 
 #region Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
