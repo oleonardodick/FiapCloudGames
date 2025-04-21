@@ -1,4 +1,5 @@
 using FiapCloudGames.API.Database;
+using FiapCloudGames.API.DTOs.Requests.GameDTO;
 using FiapCloudGames.API.DTOs.Requests.UserDTO;
 using FiapCloudGames.API.Middlewares;
 using FiapCloudGames.API.Repositories.Implementations;
@@ -7,7 +8,8 @@ using FiapCloudGames.API.Services.Configurations.JwtConfigurations;
 using FiapCloudGames.API.Services.Handlers;
 using FiapCloudGames.API.Services.Implementations;
 using FiapCloudGames.API.Services.Interfaces;
-using FiapCloudGames.API.Validators;
+using FiapCloudGames.API.Validators.GameValidator;
+using FiapCloudGames.API.Validators.UserValidator;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -62,6 +64,7 @@ builder.Host.UseSerilog();
 #region Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IGameRepository, GameRepository>();
 #endregion
 
 #region Services
@@ -71,11 +74,14 @@ builder.Services.AddSingleton<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IGameService, GameService>();
 #endregion
 
 #region Validators
 builder.Services.AddScoped<IValidator<RequestCreateUserDTO>, RequestCreateUserValidator>();
 builder.Services.AddScoped<IValidator<RequestUpdateUserDTO>, RequestUpdateUserValidator>();
+builder.Services.AddScoped<IValidator<RequestCreateGameDTO>, RequestCreateGameValidator>();
+builder.Services.AddScoped<IValidator<RequestUpdateGameDTO>, RequestUpdateGameValidator>();
 #endregion
 
 builder.Services.AddJwtServices();

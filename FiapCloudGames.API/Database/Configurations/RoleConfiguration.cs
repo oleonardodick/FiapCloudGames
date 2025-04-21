@@ -18,8 +18,8 @@ namespace FiapCloudGames.API.Database.Configurations
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasData(
-                new Role { Name = AppRoles.Admin},
-                new Role { Name = AppRoles.User }
+                new Role { Id = Guid.Parse("1bd7d258-b3fd-4e95-985f-811173518b30"), Name = AppRoles.Admin},
+                new Role { Id = Guid.Parse("93f46947-3ff4-4ed2-a3eb-4fcec16014eb"), Name = AppRoles.User }
             );
         }
     }

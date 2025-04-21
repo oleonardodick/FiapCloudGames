@@ -1,4 +1,4 @@
-﻿namespace FiapCloudGames.API.Validators
+﻿namespace FiapCloudGames.API.Validators.UserValidator
 {
     public static class PasswordValidator
     {

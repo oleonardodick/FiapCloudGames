@@ -32,7 +32,7 @@ namespace FiapCloudGames.Test.UnitTests.GameTests
                 .ReturnsAsync((gamesToReturn, qtToGenerate));
 
             //Act
-            var response = await _gameService.GetAll(pageNumber);
+            var response = await _gameService.GetAll(pageNumber, pageSize);
             var gamesReturned = response.Games;
             var pagination = response.Pagination;
 
@@ -60,7 +60,7 @@ namespace FiapCloudGames.Test.UnitTests.GameTests
                 .ReturnsAsync(([], qtToGenerate));
 
             //Act
-            var response = await _gameService.GetAll(pageNumber);
+            var response = await _gameService.GetAll(pageNumber, pageSize);
             var gamesReturned = response.Games;
             var pagination = response.Pagination;
 

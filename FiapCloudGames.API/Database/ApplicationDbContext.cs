@@ -7,6 +7,7 @@ namespace FiapCloudGames.API.Database
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Game> Games { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base (options) { }
 

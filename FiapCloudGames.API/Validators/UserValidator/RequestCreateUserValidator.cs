@@ -1,7 +1,7 @@
 ﻿using FiapCloudGames.API.DTOs.Requests.UserDTO;
 using FiapCloudGames.API.Utils;
 using FluentValidation;
-namespace FiapCloudGames.API.Validators
+namespace FiapCloudGames.API.Validators.UserValidator
 {
     public class RequestCreateUserValidator : AbstractValidator<RequestCreateUserDTO>
     {

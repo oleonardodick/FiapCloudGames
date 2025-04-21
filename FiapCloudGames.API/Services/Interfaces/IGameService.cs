@@ -5,7 +5,7 @@ namespace FiapCloudGames.API.Services.Interfaces
 {
     public interface IGameService
     {
-        Task<ResponseGamesDTO> GetAll(int pageNumber);
+        Task<ResponseGamesDTO> GetAll(int pageNumber, int perPage);
         Task<ResponseGameDTO> GetById(Guid gameId);
         Task<ResponseGameDTO> Create(RequestCreateGameDTO request);
         Task Update(Guid gameId, RequestUpdateGameDTO request);

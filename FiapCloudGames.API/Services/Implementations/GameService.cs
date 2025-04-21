@@ -13,7 +13,6 @@ namespace FiapCloudGames.API.Services.Implementations
     {
         private readonly IGameRepository _gameRepository;
         private readonly ILogger<GameService> _logger;
-        private const int PAGE_SIZE = 10;
 
         public GameService(IGameRepository gameRepository, ILogger<GameService> logger)
         {
@@ -21,10 +20,10 @@ namespace FiapCloudGames.API.Services.Implementations
             _logger = logger;
         }
 
-        public async Task<ResponseGamesDTO> GetAll(int pageNumber)
+        public async Task<ResponseGamesDTO> GetAll(int pageNumber, int perPage)
         {
             _logger.LogInformation("Executando o método GetAll da GameService com o parâmetro pageNumber = {0}", pageNumber);
-            var (games, totalItems) = await _gameRepository.GetAll(pageNumber, PAGE_SIZE);
+            var (games, totalItems) = await _gameRepository.GetAll(pageNumber, perPage);
 
             var response = new ResponseGamesDTO
             {
@@ -32,8 +31,8 @@ namespace FiapCloudGames.API.Services.Implementations
                 {
                     PageNumber = pageNumber,
                     TotalItems = totalItems,
-                    TotalPages = (int)Math.Ceiling(totalItems / (double)PAGE_SIZE),
-                    PerPage = PAGE_SIZE
+                    TotalPages = (int)Math.Ceiling(totalItems / (double)perPage),
+                    PerPage = perPage
                 },
                 Games = games.Select(game => new ResponseGameDTO
                 {

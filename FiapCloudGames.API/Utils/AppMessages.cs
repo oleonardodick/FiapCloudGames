@@ -10,6 +10,10 @@
         public const string EmailAlreadyExistsMessage = "O e-mail informado já está cadastrado";
         #endregion
 
+        #region Game validation
+        public const string PriceGreaterThanZeroMessage = "O preço informado deve ser maior que 0";
+        #endregion
+
         #region Not Found messages
         public const string UserNotFoundMessage = "Usuário não encontrado";
         public const string RoleNotFoundMessage = "Role não encontrada";
