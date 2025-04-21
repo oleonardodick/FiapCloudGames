@@ -1,4 +1,4 @@
-﻿using FiapCloudGames.API.DTOs.Requests;
+﻿using FiapCloudGames.API.DTOs.Requests.UserDTO;
 using FiapCloudGames.API.DTOs.Responses.User;
 using FiapCloudGames.API.Exceptions;
 using FiapCloudGames.API.Services.Interfaces;
@@ -31,11 +31,12 @@ namespace FiapCloudGames.API.Controllers
         [Authorize(Roles = AppRoles.Admin)]
         [HttpGet]
         [ProducesResponseType(typeof(ResponseUsersDTO), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
-        public async Task<IActionResult> GetAll([FromQuery]int? pageNumber)
+        public async Task<IActionResult> GetAll([FromQuery]int? pageNumber, [FromQuery] int? perPage)
         {
             _logger.LogInformation("Rodando o método GetAll do usuário buscando da página {0}", pageNumber ?? 1);
             var page = pageNumber ?? 1;
-            return Ok(await _userService.GetAll(page));
+            var qtdPerPage = perPage ?? 10;
+            return Ok(await _userService.GetAll(page, qtdPerPage));
         }
 
         [Authorize(Roles = AppRoles.Admin)]

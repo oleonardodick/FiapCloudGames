@@ -13,6 +13,7 @@
         #region Not Found messages
         public const string UserNotFoundMessage = "Usuário não encontrado";
         public const string RoleNotFoundMessage = "Role não encontrada";
+        public const string GameNotFoundMessage = "Jogo não encontrado";
         #endregion
 
         #region Login messages

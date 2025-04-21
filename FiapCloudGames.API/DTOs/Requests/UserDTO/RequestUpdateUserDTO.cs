@@ -1,4 +1,4 @@
-﻿namespace FiapCloudGames.API.DTOs.Requests
+﻿namespace FiapCloudGames.API.DTOs.Requests.UserDTO
 {
     public class RequestUpdateUserDTO
     {

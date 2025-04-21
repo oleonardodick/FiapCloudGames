@@ -1,5 +1,4 @@
 ﻿using FiapCloudGames.API.DTOs;
-using FiapCloudGames.API.DTOs.Requests;
 using FiapCloudGames.API.DTOs.Responses;
 using FiapCloudGames.API.DTOs.Responses.User;
 using FiapCloudGames.API.Entities;
@@ -7,7 +6,7 @@ using FiapCloudGames.API.Exceptions;
 using FiapCloudGames.API.Utils;
 using FiapCloudGames.API.Repositories.Interfaces;
 using FiapCloudGames.API.Services.Interfaces;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using FiapCloudGames.API.DTOs.Requests.UserDTO;
 
 namespace FiapCloudGames.API.Services.Implementations
 {
@@ -18,7 +17,6 @@ namespace FiapCloudGames.API.Services.Implementations
         private readonly IJwtService _jwtService;
         private readonly IRoleRepository _roleRepository;
         private readonly ILogger<UserService> _logger;
-        private const int PAGE_SIZE = 10;
 
         public UserService(IUserRepository userRepository, IEncryptionService encryptionService, IJwtService jwtService, 
             IRoleRepository roleRepository, ILogger<UserService> logger)
@@ -30,17 +28,18 @@ namespace FiapCloudGames.API.Services.Implementations
             _logger = logger;
         }
 
-        public async Task<ResponseUsersDTO> GetAll(int pageNumber)
+        public async Task<ResponseUsersDTO> GetAll(int pageNumber, int perPage)
         {
             _logger.LogInformation("Executando o método GetAll do UserService com o parâmetro pageNumber = {0}", pageNumber);
-            var (users, totalItems) = await _userRepository.GetAll(pageNumber, PAGE_SIZE);
+            var (users, totalItems) = await _userRepository.GetAll(pageNumber, perPage);
 
             var response =  new ResponseUsersDTO
             {
                 Pagination = new PaginationDTO { 
                     PageNumber = pageNumber,
                     TotalItems = totalItems,
-                    TotalPages = (int)Math.Ceiling(totalItems/(double)PAGE_SIZE)
+                    TotalPages = (int)Math.Ceiling(totalItems/(double)perPage),
+                    PerPage = perPage
                 },
                 Users = users.Select(user => new ResponseUserDTO
                 {

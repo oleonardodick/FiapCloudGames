@@ -1,4 +1,4 @@
-﻿using FiapCloudGames.API.DTOs.Requests;
+﻿using FiapCloudGames.API.DTOs.Requests.UserDTO;
 using FiapCloudGames.API.Entities;
 using FiapCloudGames.API.Exceptions;
 using FiapCloudGames.API.Utils;
@@ -9,32 +9,41 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
 {
     public class UserServiceTest : UserServiceTestBase
     {
-        [Fact]
-        public async Task GetAll_ShouldReturnAllUsers()
+        [Theory]
+        [InlineData(1, 5)]
+        [InlineData(1, 15)]
+        [InlineData(2, 15)]
+        public async Task GetAll_ShouldReturnAllUsersFromPage(int pageNumber, int qtToGenerate)
         {
             //Arrange
-            var qtToGenerate = 5;
             var users = FakeUser.FakeListUsers(qtToGenerate);
             var pageSize = 10;
             var totalPages = (int)Math.Ceiling(qtToGenerate / (double)pageSize);
-            var pageNumber = 1;
+            var qtUsersInPage = Math.Min(pageSize, qtToGenerate - ((pageNumber - 1) * pageSize));
+
+            var usersToReturn = users
+                .OrderBy(x => x.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
 
             _userRepository
                 .Setup(r => r.GetAll(pageNumber, pageSize))
-                .ReturnsAsync((users, qtToGenerate));
+                .ReturnsAsync((usersToReturn, qtToGenerate));
 
             //Act
-            var response = await _userSevice.GetAll(pageNumber);
+            var response = await _userSevice.GetAll(pageNumber, pageSize);
             var resultUsers = response.Users;
             var pagination = response.Pagination;
 
             //Assert
             Assert.NotNull(resultUsers);
-            Assert.Equal(qtToGenerate, resultUsers.Count);
             Assert.NotNull(pagination);
             Assert.Equal(pageNumber, pagination.PageNumber);
             Assert.Equal(totalPages, pagination.TotalPages);
             Assert.Equal(qtToGenerate, pagination.TotalItems);
+            Assert.Equal(pageSize, pagination.PerPage);
+            Assert.Equal(qtUsersInPage, resultUsers.Count);
         }
 
         [Fact]
@@ -51,7 +60,7 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
                 .ReturnsAsync(([], qtToGenerate));
 
             //Act
-            var response = await _userSevice.GetAll(pageNumber);
+            var response = await _userSevice.GetAll(pageNumber, pageSize);
             var resultUsers = response.Users;
             var pagination = response.Pagination;
 

@@ -1,5 +1,5 @@
 using FiapCloudGames.API.Database;
-using FiapCloudGames.API.DTOs.Requests;
+using FiapCloudGames.API.DTOs.Requests.UserDTO;
 using FiapCloudGames.API.Middlewares;
 using FiapCloudGames.API.Repositories.Implementations;
 using FiapCloudGames.API.Repositories.Interfaces;

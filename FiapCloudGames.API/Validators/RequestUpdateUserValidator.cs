@@ -1,4 +1,4 @@
-﻿using FiapCloudGames.API.DTOs.Requests;
+﻿using FiapCloudGames.API.DTOs.Requests.UserDTO;
 using FiapCloudGames.API.Utils;
 using FluentValidation;
 
