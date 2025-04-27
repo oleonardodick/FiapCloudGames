@@ -9,6 +9,8 @@ namespace FiapCloudGames.Test.UnitTests.SecurityTests
     {
         private JwtKeyProvider _jwtKeyProvider;
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "JwtProvider")]
         [Fact]
         public void SectionNotConfigured_ShouldThrownInvalidOperationException()
         {
@@ -26,6 +28,8 @@ namespace FiapCloudGames.Test.UnitTests.SecurityTests
             Assert.Equal(AppMessages.JwtSectionNotConfigured, exception.Message);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "JwtProvider")]
         [Fact]
         public void SecretKeyEmpty_ShouldThrownInvalidOperationException()
         {
@@ -46,6 +50,8 @@ namespace FiapCloudGames.Test.UnitTests.SecurityTests
             Assert.Equal(AppMessages.SecretKeyNotConfigured, exception.Message);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "JwtProvider")]
         [Fact]
         public void SecretKeyNull_ShouldThrownInvalidOperationException()
         {
@@ -66,6 +72,8 @@ namespace FiapCloudGames.Test.UnitTests.SecurityTests
             Assert.Equal(AppMessages.SecretKeyNotConfigured, exception.Message);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "JwtProvider")]
         [Fact]
         public void KeyConfigured_ShouldReturnTheKeyConfigured()
         {

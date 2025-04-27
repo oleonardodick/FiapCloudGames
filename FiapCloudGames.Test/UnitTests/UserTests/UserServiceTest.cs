@@ -9,6 +9,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
 {
     public class UserServiceTest : UserServiceTestBase
     {
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "UserService")]
         [Theory]
         [InlineData(1, 5)]
         [InlineData(1, 15)]
@@ -46,6 +48,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             Assert.Equal(qtUsersInPage, resultUsers.Count);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "UserService")]
         [Fact]
         public async Task GetAll_ShouldReturnEmptyList()
         {
@@ -73,6 +77,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             Assert.Equal(qtToGenerate, pagination.TotalItems);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "UserService")]
         [Fact]
         public async Task GetById_ShouldReturnUserNotFound()
         {
@@ -90,6 +96,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             Assert.Contains(AppMessages.UserNotFoundMessage, exception.GetErrorMessages());
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "UserService")]
         [Fact]
         public async Task GetById_ShouldReturnTheUser()
         {
@@ -111,6 +119,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             Assert.Equal(response.CreatedAt, user.CreatedAt);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "UserService")]
         [Fact]
         public async Task Create_ShouldCreateAnUser()
         {
@@ -154,6 +164,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
 
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "UserService")]
         [Fact]
         public async Task Create_ShouldReturnEmailAlreadyExistsException()
         {
@@ -178,6 +190,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             Assert.Contains(AppMessages.EmailAlreadyExistsMessage, exception.GetErrorMessages());
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "UserService")]
         [Fact]
         public async Task Update_ShouldUpdateTheUser()
         {
@@ -201,6 +215,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             _userRepository.Verify(r => r.Update(It.Is<User>(u => u == user)), Times.Once);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "UserService")]
         [Fact]
         public async Task Update_ShouldReturnUserNotFound()
         {
@@ -222,6 +238,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             Assert.Contains(AppMessages.UserNotFoundMessage, exception.GetErrorMessages());
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "UserService")]
         [Fact]
         public async Task Delete_ShouldDeleteTheUser()
         {
@@ -239,6 +257,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             _userRepository.Verify(r => r.Delete(user), Times.Once);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "UserService")]
         [Fact]
         public async Task Delete_ShouldReturnUserNotFound()
         {

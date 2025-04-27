@@ -20,6 +20,8 @@ namespace FiapCloudGames.Test.UnitTests.SecurityTests
             _jwtService = new JwtService(_jwtKeyProvider.Object);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "JwtService")]
         [Fact]
         public void ShouldGenerateJwtToken()
         {

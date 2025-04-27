@@ -8,14 +8,19 @@ namespace FiapCloudGames.API.Validators.GameValidator
     {
         public RequestCreateGameValidator()
         {
-            RuleFor(request => request.Name)
-                .NotEmpty().WithMessage(AppMessages.GetRequiredFieldMessage("name"));
+            #region Name Field Rules
+            RuleFor(r => r.Name)
+                .NotNull().WithMessage(AppMessages.GetRequiredFieldMessage("name"));
 
-            RuleFor(request => request.Price)
-                .NotEmpty().WithMessage(AppMessages.GetRequiredFieldMessage("price"));
+            RuleFor(r => r.Name)
+                .NotEmpty().WithMessage(AppMessages.GetNotEmptyFieldMessage("name"))
+                .When(r => r.Name != null);
+            #endregion
 
+            #region Price Field Rules
             RuleFor(request => request.Price)
                 .GreaterThan(0).WithMessage(AppMessages.PriceGreaterThanZeroMessage);
+            #endregion
         }
     }
 }

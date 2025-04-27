@@ -14,6 +14,9 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             _validator = new RequestCreateUserValidator();
         }
 
+        #region Field Name Tests
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "CreateUserValidator")]
         [Fact]
         public void Validate_ShouldReturnRequiredFieldForName()
         {
@@ -32,14 +35,16 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             result.ShouldHaveValidationErrorFor(c => c.Name).WithErrorMessage(AppMessages.GetRequiredFieldMessage("name"));
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "CreateUserValidator")]
         [Fact]
-        public void Validate_ShouldReturnInvalidEmail()
+        public void Validate_ShouldReturnNotEmptyFieldForName()
         {
             //Arrange
             var request = new RequestCreateUserDTO
             {
-                Name = "User test",
-                Email = "invalidMail",
+                Name = "",
+                Email = "mail@test.com",
                 Password = "@Password123",
                 RoleId = Guid.NewGuid()
             };
@@ -48,9 +53,13 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             var result = _validator.TestValidate(request);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(c => c.Email).WithErrorMessage(AppMessages.InvalidEmailFormatMessage);
+            result.ShouldHaveValidationErrorFor(c => c.Name).WithErrorMessage(AppMessages.GetNotEmptyFieldMessage("name"));
         }
+        #endregion
 
+        #region Field Email Tests
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "CreateUserValidator")]
         [Fact]
         public void Validate_ShouldReturnRequiredFieldForEmail()
         {
@@ -69,6 +78,93 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             result.ShouldHaveValidationErrorFor(c => c.Email).WithErrorMessage(AppMessages.GetRequiredFieldMessage("email"));
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "CreateUserValidator")]
+        [Fact]
+        public void Validate_ShouldReturnNotEmptyFieldForEmail()
+        {
+            //Arrange
+            var request = new RequestCreateUserDTO
+            {
+                Name = "User test",
+                Email = "",
+                Password = "@Password123",
+                RoleId = Guid.NewGuid()
+            };
+
+            //Act
+            var result = _validator.TestValidate(request);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(c => c.Email).WithErrorMessage(AppMessages.GetNotEmptyFieldMessage("email"));
+        }
+
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "CreateUserValidator")]
+        [Fact]
+        public void Validate_ShouldReturnInvalidEmail()
+        {
+            //Arrange
+            var request = new RequestCreateUserDTO
+            {
+                Name = "User test",
+                Email = "invalidMail",
+                Password = "@Password123",
+                RoleId = Guid.NewGuid()
+            };
+
+            //Act
+            var result = _validator.TestValidate(request);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(c => c.Email).WithErrorMessage(AppMessages.InvalidEmailFormatMessage);
+        }
+        #endregion
+
+        #region Field Password Tests
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "CreateUserValidator")]
+        [Fact]
+        public void Validate_ShouldReturnRequiredFieldForPassword()
+        {
+            //Arrange
+            var request = new RequestCreateUserDTO
+            {
+                Name = "User test",
+                Email = "test@mail.com",
+                RoleId = Guid.NewGuid()
+            };
+
+            //Act
+            var result = _validator.TestValidate(request);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(c => c.Password).WithErrorMessage(AppMessages.GetRequiredFieldMessage("password"));
+        }
+
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "CreateUserValidator")]
+        [Fact]
+        public void Validate_ShouldReturnNotEmptyFieldForPassword()
+        {
+            //Arrange
+            var request = new RequestCreateUserDTO
+            {
+                Name = "User test",
+                Email = "mail@test.com",
+                Password = "",
+                RoleId = Guid.NewGuid()
+            };
+
+            //Act
+            var result = _validator.TestValidate(request);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(c => c.Password).WithErrorMessage(AppMessages.GetNotEmptyFieldMessage("password"));
+        }
+
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "CreateUserValidator")]
         [Fact]
         public void Validate_ShouldReturnInvalidPasswordFormat()
         {
@@ -89,6 +185,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             Assert.Single(result.Errors);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "CreateUserValidator")]
         [Fact]
         public void Validate_ShouldReturnInvalidSizeForPassword()
         {
@@ -107,9 +205,13 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             //Assert
             result.ShouldHaveValidationErrorFor(c => c.Password).WithErrorMessage(AppMessages.InvalidSizePasswordMessage);
         }
+        #endregion
 
+        #region Field RoleId Tests
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "CreateUserValidator")]
         [Fact]
-        public void Validate_ShouldReturnRequiredFieldForRoleId()
+        public void Validate_ShouldReturnNotEmpyFieldForRoleId()
         {
             //Arrange
             var request = new RequestCreateUserDTO
@@ -117,15 +219,19 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
                 Name = "User test",
                 Email = "mail@test.com",
                 Password = "@Password123",
+                RoleId = Guid.Empty
             };
 
             //Act
             var result = _validator.TestValidate(request);
 
             //Assert
-            result.ShouldHaveValidationErrorFor(c => c.RoleId).WithErrorMessage(AppMessages.GetRequiredFieldMessage("roleId"));
+            result.ShouldHaveValidationErrorFor(c => c.RoleId).WithErrorMessage(AppMessages.GetNotEmptyFieldMessage("roleId"));
         }
+        #endregion
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "CreateUserValidator")]
         [Fact]
         public void Validate_ShouldReturnMoreThanOneError()
         {
@@ -140,6 +246,8 @@ namespace FiapCloudGames.Test.UnitTests.UserTests
             Assert.NotEqual(1, result.Errors.Count);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "CreateUserValidator")]
         [Fact]
         public void Validate_ShouldValidateTheUserData()
         {

@@ -9,7 +9,7 @@ namespace FiapCloudGames.API.Validators.GameValidator
         public RequestUpdateGameValidator()
         {
             RuleFor(r => r.Name)
-                .NotEmpty().WithMessage(AppMessages.GetRequiredFieldMessage("name"))
+                .NotEmpty().WithMessage(AppMessages.GetNotEmptyFieldMessage("name"))
                 .When(r => r.Name != null);
 
             RuleFor(request => request.Price)

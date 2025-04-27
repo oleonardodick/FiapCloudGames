@@ -36,5 +36,11 @@
             var RequiredFieldMessage = "O campo '{0}' é obrigatório";
             return string.Format(RequiredFieldMessage, fieldName);
         }
+
+        public static string GetNotEmptyFieldMessage(string fieldName)
+        {
+            var notEmptyField = "O campo '{0}' não pode ser branco";
+            return string.Format(notEmptyField, fieldName);
+        }
     }
 }

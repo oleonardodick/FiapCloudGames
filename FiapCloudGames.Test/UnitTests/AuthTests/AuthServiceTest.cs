@@ -9,6 +9,8 @@ namespace FiapCloudGames.Test.UnitTests.AuthTests
 {
     public class AuthServiceTest : AuthServiceTestBase
     {
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "AuthService")]
         [Fact]
         public async Task InvalidEmail_ShouldThrownInvalidLoginException()
         {
@@ -31,6 +33,8 @@ namespace FiapCloudGames.Test.UnitTests.AuthTests
 
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "AuthService")]
         [Fact]
         public async Task InvalidPassword_ShouldThrownInvalidLoginException()
         {
@@ -58,6 +62,8 @@ namespace FiapCloudGames.Test.UnitTests.AuthTests
             Assert.Contains(AppMessages.InvalidLoginMessage, exception.GetErrorMessages());
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "AuthService")]
         [Fact]
         public async Task ValidLogin_ShouldReturnTheAccessToken()
         {

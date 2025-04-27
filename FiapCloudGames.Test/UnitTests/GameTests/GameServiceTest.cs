@@ -9,6 +9,8 @@ namespace FiapCloudGames.Test.UnitTests.GameTests
 {
     public class GameServiceTest : GameServiceTestBase
     {
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "GameService")]
         [Theory]
         [InlineData(1, 5)]
         [InlineData(1, 15)]
@@ -46,6 +48,8 @@ namespace FiapCloudGames.Test.UnitTests.GameTests
             Assert.Equal(qtGamesInPage, gamesReturned.Count);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "GameService")]
         [Fact]
         public async Task GetAll_ShouldReturnEmptyList()
         {
@@ -73,6 +77,8 @@ namespace FiapCloudGames.Test.UnitTests.GameTests
             Assert.Empty(gamesReturned);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "GameService")]
         [Fact]
         public async Task GetById_ShouldReturnAGame()
         {
@@ -94,6 +100,8 @@ namespace FiapCloudGames.Test.UnitTests.GameTests
             Assert.Equal(game.CreatedAt, response.CreatedAt);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "GameService")]
         [Fact]
         public async Task GetById_ShouldReturnGameNotFoundException()
         {
@@ -109,6 +117,8 @@ namespace FiapCloudGames.Test.UnitTests.GameTests
             Assert.Contains(AppMessages.GameNotFoundMessage, exception.GetErrorMessages());
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "GameService")]
         [Fact]
         public async Task Create_ShouldCreateAGame()
         {
@@ -134,6 +144,8 @@ namespace FiapCloudGames.Test.UnitTests.GameTests
             Assert.Equal(request.Price, response.Price);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "GameService")]
         [Fact]
         public async Task Update_ShouldUpdateAGame()
         {
@@ -157,6 +169,8 @@ namespace FiapCloudGames.Test.UnitTests.GameTests
             _gameRepository.Verify(r => r.Update(game), Times.Once);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "GameService")]
         [Fact]
         public async Task Update_ShouldReturnNotFoundException()
         {
@@ -177,6 +191,8 @@ namespace FiapCloudGames.Test.UnitTests.GameTests
             Assert.Contains(AppMessages.GameNotFoundMessage, exception.GetErrorMessages());
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "GameService")]
         [Fact]
         public async Task Delete_ShouldDeleteTheGame()
         {
@@ -194,6 +210,8 @@ namespace FiapCloudGames.Test.UnitTests.GameTests
             _gameRepository.Verify(r => r.Delete(game), Times.Once);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "GameService")]
         [Fact]
         public async Task Delete_ShouldReturnNotFoundException()
         {

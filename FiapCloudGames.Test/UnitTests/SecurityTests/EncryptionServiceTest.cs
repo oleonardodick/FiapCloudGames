@@ -11,6 +11,8 @@ namespace FiapCloudGames.Test.UnitTests.SecurityTests
             _encryptionService = new EncryptionService();
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "EncryptionService")]
         [Fact]
         public void ShouldEncryptTheText()
         {
@@ -26,6 +28,8 @@ namespace FiapCloudGames.Test.UnitTests.SecurityTests
             Assert.NotEqual(originalText, encryptedText);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "EncryptionService")]
         [Fact]
         public void ShouldDecryptTheText()
         {

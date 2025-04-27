@@ -7,6 +7,8 @@ namespace FiapCloudGames.Test.UnitTests.RoleTests
 {
     public class RoleServiceTest : RoleServiceTestBase
     {
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "RoleService")]
         [Fact]
         public async Task GetAll_ShouldGetAllRoles()
         {
@@ -23,6 +25,8 @@ namespace FiapCloudGames.Test.UnitTests.RoleTests
             Assert.Equal(roles.Count, response.Roles.Count);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "RoleService")]
         [Fact]
         public async Task GetAll_ShouldReturnEmptyList()
         {
@@ -39,6 +43,8 @@ namespace FiapCloudGames.Test.UnitTests.RoleTests
             Assert.Empty(response.Roles);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "RoleService")]
         [Fact]
         public async Task GetById_ShouldReturnARoleByItsId()
         {
@@ -57,6 +63,8 @@ namespace FiapCloudGames.Test.UnitTests.RoleTests
             Assert.Equal(response.CreatedAt, roles[0].CreatedAt);
         }
 
+        [Trait("Category", "UnitTest")]
+        [Trait("Module", "RoleService")]
         [Fact]
         public async Task GetById_ShouldReturnRoleNotFound()
         {
