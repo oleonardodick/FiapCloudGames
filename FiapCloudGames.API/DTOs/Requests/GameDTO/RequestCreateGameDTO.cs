@@ -1,9 +1,13 @@
-﻿namespace FiapCloudGames.API.DTOs.Requests.GameDTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FiapCloudGames.API.DTOs.Requests.GameDTO
 {
     public class RequestCreateGameDTO
     {
+        [Required]
         public required string Name { get; set; }
         public string? Description { get; set; }
+        [Required]
         public double Price { get; set; }
     }
 }
