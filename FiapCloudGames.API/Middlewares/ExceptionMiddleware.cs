@@ -27,7 +27,8 @@ namespace FiapCloudGames.API.Middlewares
                 context.Response.StatusCode = (int)ex.GetStatusCode();
                 await context.Response.WriteAsJsonAsync(new ResponseErrorMessagesDTO
                 {
-                    Errors = ex.GetErrorMessages()
+                    Errors = ex.GetErrorMessages(),
+                    StatusCode = context.Response.StatusCode
                 });
             }
             catch (Exception ex)

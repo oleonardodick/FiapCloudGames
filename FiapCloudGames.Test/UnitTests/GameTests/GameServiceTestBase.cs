@@ -1,5 +1,5 @@
-﻿using FiapCloudGames.API.Repositories.Interfaces;
-using FiapCloudGames.API.Services.Implementations;
+﻿using FiapCloudGames.API.Modules.Games.Repositories.Interfaces;
+using FiapCloudGames.API.Modules.Games.Services.Implementations;
 using Microsoft.Extensions.Logging;
 using Moq;
 

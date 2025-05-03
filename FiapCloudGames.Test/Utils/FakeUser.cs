@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using FiapCloudGames.API.Entities;
+using FiapCloudGames.API.Modules.Users.Entities;
 
 namespace FiapCloudGames.Test.Utils
 {

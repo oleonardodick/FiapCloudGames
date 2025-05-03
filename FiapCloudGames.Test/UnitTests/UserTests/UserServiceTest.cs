@@ -1,6 +1,7 @@
-﻿using FiapCloudGames.API.DTOs.Requests.UserDTO;
-using FiapCloudGames.API.Entities;
-using FiapCloudGames.API.Exceptions;
+﻿using FiapCloudGames.API.Exceptions;
+using FiapCloudGames.API.Modules.Roles.Entities;
+using FiapCloudGames.API.Modules.Users.DTOs.Requests;
+using FiapCloudGames.API.Modules.Users.Entities;
 using FiapCloudGames.API.Utils;
 using FiapCloudGames.Test.Utils;
 using Moq;

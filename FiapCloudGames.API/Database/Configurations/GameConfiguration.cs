@@ -1,4 +1,4 @@
-﻿using FiapCloudGames.API.Entities;
+﻿using FiapCloudGames.API.Modules.Games.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,6 +1,7 @@
-﻿using FiapCloudGames.API.Repositories.Interfaces;
-using FiapCloudGames.API.Services.Implementations;
-using FiapCloudGames.API.Services.Interfaces;
+﻿using FiapCloudGames.API.Modules.Authentication.Services.Implementations;
+using FiapCloudGames.API.Modules.Authentication.Services.Interfaces;
+using FiapCloudGames.API.Modules.Encryption.Services.Interfaces;
+using FiapCloudGames.API.Modules.Users.Repositories.Interfaces;
 using Moq;
 
 namespace FiapCloudGames.Test.UnitTests.AuthTests

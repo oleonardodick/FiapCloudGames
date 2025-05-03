@@ -1,6 +1,6 @@
-﻿using FiapCloudGames.API.Entities;
-using FiapCloudGames.API.Repositories.Interfaces;
-using FiapCloudGames.API.Services.Implementations;
+﻿using FiapCloudGames.API.Modules.Roles.Entities;
+using FiapCloudGames.API.Modules.Roles.Repositories.Interfaces;
+using FiapCloudGames.API.Modules.Roles.Services.Implementations;
 using FiapCloudGames.API.Utils;
 using Moq;
 

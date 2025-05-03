@@ -1,4 +1,4 @@
-﻿using FiapCloudGames.API.Services.Implementations;
+﻿using FiapCloudGames.API.Modules.Encryption.Services.Implementations;
 
 namespace FiapCloudGames.Test.UnitTests.SecurityTests
 {

@@ -1,5 +1,5 @@
-﻿using FiapCloudGames.API.Services.Configurations.JwtConfigurations;
-using FiapCloudGames.API.Services.Implementations;
+﻿using FiapCloudGames.API.Modules.Authentication.Configurations.Interfaces;
+using FiapCloudGames.API.Modules.Authentication.Services.Implementations;
 using FiapCloudGames.API.Utils;
 using Microsoft.IdentityModel.Tokens;
 using Moq;

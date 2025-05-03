@@ -1,6 +1,8 @@
-﻿using FiapCloudGames.API.Repositories.Interfaces;
-using FiapCloudGames.API.Services.Implementations;
-using FiapCloudGames.API.Services.Interfaces;
+﻿using FiapCloudGames.API.Modules.Authentication.Services.Interfaces;
+using FiapCloudGames.API.Modules.Encryption.Services.Interfaces;
+using FiapCloudGames.API.Modules.Roles.Repositories.Interfaces;
+using FiapCloudGames.API.Modules.Users.Repositories.Interfaces;
+using FiapCloudGames.API.Modules.Users.Services.Implementations;
 using Microsoft.Extensions.Logging;
 using Moq;
 

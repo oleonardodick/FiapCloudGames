@@ -1,6 +1,6 @@
-﻿using FiapCloudGames.API.DTOs.Requests.UserDTO;
+﻿using FiapCloudGames.API.Modules.Users.DTOs.Requests;
+using FiapCloudGames.API.Modules.Users.Validators;
 using FiapCloudGames.API.Utils;
-using FiapCloudGames.API.Validators.UserValidator;
 using FluentValidation.TestHelper;
 
 namespace FiapCloudGames.Test.UnitTests.UserTests

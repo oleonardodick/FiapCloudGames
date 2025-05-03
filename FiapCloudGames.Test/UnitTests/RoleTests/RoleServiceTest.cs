@@ -1,5 +1,5 @@
-﻿using FiapCloudGames.API.Entities;
-using FiapCloudGames.API.Exceptions;
+﻿using FiapCloudGames.API.Exceptions;
+using FiapCloudGames.API.Modules.Roles.Entities;
 using FiapCloudGames.API.Utils;
 using Moq;
 

@@ -1,4 +1,6 @@
-﻿using FiapCloudGames.API.Entities;
+﻿using FiapCloudGames.API.Modules.Games.Entities;
+using FiapCloudGames.API.Modules.Roles.Entities;
+using FiapCloudGames.API.Modules.Users.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FiapCloudGames.API.Database
