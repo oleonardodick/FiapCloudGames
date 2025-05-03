@@ -2,7 +2,7 @@
 using FiapCloudGames.API.Modules.Roles.DTOs.Responses;
 using FiapCloudGames.API.Modules.Roles.Repositories.Interfaces;
 using FiapCloudGames.API.Modules.Roles.Services.Interfaces;
-using FiapCloudGames.API.Utils;
+using FiapCloudGames.API.Shared.Utils;
 
 namespace FiapCloudGames.API.Modules.Roles.Services.Implementations
 {

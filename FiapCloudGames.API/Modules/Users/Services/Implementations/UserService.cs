@@ -8,7 +8,7 @@ using FiapCloudGames.API.Modules.Users.Entities;
 using FiapCloudGames.API.Modules.Users.Repositories.Interfaces;
 using FiapCloudGames.API.Modules.Users.Services.Interfaces;
 using FiapCloudGames.API.Shared.DTOs;
-using FiapCloudGames.API.Utils;
+using FiapCloudGames.API.Shared.Utils;
 
 namespace FiapCloudGames.API.Modules.Users.Services.Implementations
 {

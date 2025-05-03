@@ -1,9 +1,10 @@
-﻿using FiapCloudGames.API.DTOs.Responses;
-using FiapCloudGames.API.Exceptions;
+﻿using FiapCloudGames.API.Exceptions;
 using FiapCloudGames.API.Modules.Games.DTOs.Requests;
 using FiapCloudGames.API.Modules.Games.DTOs.Responses;
 using FiapCloudGames.API.Modules.Games.Services.Interfaces;
-using FiapCloudGames.API.Utils;
+using FiapCloudGames.API.Shared.DTOs.Responses;
+using FiapCloudGames.API.Shared.Helpers;
+using FiapCloudGames.API.Shared.Utils;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -74,12 +75,7 @@ namespace FiapCloudGames.API.Modules.Games.Controllers
         public async Task<IActionResult> Create([FromBody] RequestCreateGameDTO request)
         {
             _logger.LogInformation("Rodando o método Create do jogo com os dados {@Request}", request);
-            var validationResult = await _validatorCreate.ValidateAsync(request);
-            if (!validationResult.IsValid)
-            {
-                var errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
-                throw new ValidationErrorException(errors);
-            }
+            await ValidationHelper.ValidateAsync(_validatorCreate, request);
             var response = await _gameService.Create(request);
 
             return Created($"/api/game/{response.Id}", response);
@@ -100,12 +96,7 @@ namespace FiapCloudGames.API.Modules.Games.Controllers
         public async Task<IActionResult> Update([FromRoute] Guid gameId, [FromBody] RequestUpdateGameDTO request)
         {
             _logger.LogInformation("Rodando o método Update do jogo buscando o ID {0} e com as informações {@Request}", gameId, request);
-            var validationResult = await _validatorUpdate.ValidateAsync(request);
-            if (!validationResult.IsValid)
-            {
-                var errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
-                throw new ValidationErrorException(errors);
-            }
+            await ValidationHelper.ValidateAsync(_validatorUpdate, request);
             await _gameService.Update(gameId, request);
             return NoContent();
         }

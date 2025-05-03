@@ -1,5 +1,5 @@
-﻿using FiapCloudGames.API.DTOs.Responses;
-using FiapCloudGames.API.Exceptions;
+﻿using FiapCloudGames.API.Exceptions;
+using FiapCloudGames.API.Shared.DTOs.Responses;
 
 namespace FiapCloudGames.API.Middlewares
 {

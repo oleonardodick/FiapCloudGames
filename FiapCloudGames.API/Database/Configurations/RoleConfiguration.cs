@@ -1,5 +1,5 @@
 ﻿using FiapCloudGames.API.Modules.Roles.Entities;
-using FiapCloudGames.API.Utils;
+using FiapCloudGames.API.Shared.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

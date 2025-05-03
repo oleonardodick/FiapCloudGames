@@ -1,5 +1,5 @@
 ﻿using FiapCloudGames.API.Modules.Authentication.Configurations.Interfaces;
-using FiapCloudGames.API.Utils;
+using FiapCloudGames.API.Shared.Utils;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 

@@ -1,9 +1,10 @@
-﻿using FiapCloudGames.API.DTOs.Responses;
-using FiapCloudGames.API.Exceptions;
+﻿using FiapCloudGames.API.Exceptions;
 using FiapCloudGames.API.Modules.Users.DTOs.Requests;
 using FiapCloudGames.API.Modules.Users.DTOs.Responses;
 using FiapCloudGames.API.Modules.Users.Services.Interfaces;
-using FiapCloudGames.API.Utils;
+using FiapCloudGames.API.Shared.DTOs.Responses;
+using FiapCloudGames.API.Shared.Helpers;
+using FiapCloudGames.API.Shared.Utils;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -75,12 +76,9 @@ namespace FiapCloudGames.API.Modules.Users.Controllers
         public async Task<IActionResult> Create([FromBody] RequestCreateUserDTO request)
         {
             _logger.LogInformation("Rodando o método Create do usuário com os dados {@Request}", request);
-            var validationResult = await _validatorCreate.ValidateAsync(request);
-            if (!validationResult.IsValid)
-            {
-                var errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
-                throw new ValidationErrorException(errors);
-            }
+            
+            await ValidationHelper.ValidateAsync(_validatorCreate, request);
+            
             var response = await _userService.Create(request);
 
             return Created($"/api/user/{response.Id}", response);
@@ -101,12 +99,9 @@ namespace FiapCloudGames.API.Modules.Users.Controllers
         public async Task<IActionResult> Update([FromRoute] Guid userId, [FromBody] RequestUpdateUserDTO request)
         {
             _logger.LogInformation("Rodando o método Update do usuário buscando o ID {0} e com as informações {@Request}", userId, request);
-            var validationResult = await _validatorUpdate.ValidateAsync(request);
-            if (!validationResult.IsValid)
-            {
-                var errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
-                throw new ValidationErrorException(errors);
-            }
+
+            await ValidationHelper.ValidateAsync(_validatorUpdate, request);
+
             await _userService.Update(userId, request);
             return NoContent();
         }

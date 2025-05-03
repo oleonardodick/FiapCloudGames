@@ -1,4 +1,4 @@
-﻿namespace FiapCloudGames.API.DTOs.Responses
+﻿namespace FiapCloudGames.API.Shared.DTOs.Responses
 {
     public class ResponseErrorMessagesDTO
     {

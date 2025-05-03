@@ -1,6 +1,6 @@
 ﻿using FiapCloudGames.API.Modules.Games.DTOs.Requests;
 using FiapCloudGames.API.Modules.Games.Validators;
-using FiapCloudGames.API.Utils;
+using FiapCloudGames.API.Shared.Utils;
 using FluentValidation.TestHelper;
 
 namespace FiapCloudGames.Test.UnitTests.GameTests

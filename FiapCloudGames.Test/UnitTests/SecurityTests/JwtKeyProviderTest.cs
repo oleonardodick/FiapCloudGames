@@ -1,5 +1,5 @@
 ﻿using FiapCloudGames.API.Modules.Authentication.Configurations.Implementations;
-using FiapCloudGames.API.Utils;
+using FiapCloudGames.API.Shared.Utils;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 

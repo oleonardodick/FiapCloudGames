@@ -1,7 +1,7 @@
-﻿using FiapCloudGames.API.DTOs.Responses;
-using FiapCloudGames.API.Modules.Roles.DTOs.Responses;
+﻿using FiapCloudGames.API.Modules.Roles.DTOs.Responses;
 using FiapCloudGames.API.Modules.Roles.Services.Interfaces;
-using FiapCloudGames.API.Utils;
+using FiapCloudGames.API.Shared.DTOs.Responses;
+using FiapCloudGames.API.Shared.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;

@@ -1,4 +1,4 @@
-﻿using FiapCloudGames.API.Utils;
+﻿using FiapCloudGames.API.Shared.Utils;
 using System.Net;
 
 namespace FiapCloudGames.API.Exceptions

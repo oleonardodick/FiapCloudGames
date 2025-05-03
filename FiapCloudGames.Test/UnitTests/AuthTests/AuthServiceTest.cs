@@ -2,7 +2,7 @@
 using FiapCloudGames.API.Modules.Authentication.DTOs.Requests;
 using FiapCloudGames.API.Modules.Roles.Entities;
 using FiapCloudGames.API.Modules.Users.Entities;
-using FiapCloudGames.API.Utils;
+using FiapCloudGames.API.Shared.Utils;
 using FiapCloudGames.Test.Utils;
 using Moq;
 

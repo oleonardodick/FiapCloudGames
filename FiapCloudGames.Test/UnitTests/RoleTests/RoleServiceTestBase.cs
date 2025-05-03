@@ -1,7 +1,7 @@
 ﻿using FiapCloudGames.API.Modules.Roles.Entities;
 using FiapCloudGames.API.Modules.Roles.Repositories.Interfaces;
 using FiapCloudGames.API.Modules.Roles.Services.Implementations;
-using FiapCloudGames.API.Utils;
+using FiapCloudGames.API.Shared.Utils;
 using Moq;
 
 namespace FiapCloudGames.Test.UnitTests.RoleTests
