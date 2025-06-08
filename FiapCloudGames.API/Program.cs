@@ -23,7 +23,7 @@ builder.Services.AddSwaggerGen(options =>
     {
         Version = "v1",
         Title = "Fiap Cloud Games",
-        Description = "API ASP.NET Core para o controle de usuário e seus jogos adquiridos na plataforma.",
+        Description = "API ASP.NET Core para o controle de usuï¿½rio e seus jogos adquiridos na plataforma.",
         Contact = new OpenApiContact
         {
             Name = "Leonardo Bernardes",
@@ -84,14 +84,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI(options =>
+//     {
+//         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Fiap Cloud Games v1");
+//     });
+// }
+
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Fiap Cloud Games v1");
     });
-}
 
 app.UseMiddleware<ExceptionMiddleware>();
 //app.UseMiddleware<UpdateUserMiddleware>();
