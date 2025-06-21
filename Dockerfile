@@ -13,7 +13,7 @@ WORKDIR /src/FiapCloudGames.API
 RUN dotnet build -c Release -o /app/build
 
 # Publish stage
-FROM build as publish
+FROM build AS publish
 RUN dotnet publish -c Release -o /app/publish
 
 #Run stage
